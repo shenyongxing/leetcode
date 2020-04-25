@@ -54,6 +54,51 @@ public class Leetcode2 {
         return dummy.next;
     }
 
+    /**
+     * 两数之和 优化版本，上面一个方法的用时在3ms，这个方法在1ms。大体思想相似，但是有些不同。
+     * @param l1
+     * @param l2
+     * @return
+     */
+    public ListNode addTwoNumbers2(ListNode l1, ListNode l2) {
+        // 首先， 不判判两个链表，在while中有判断。 
+        ListNode dummy = new ListNode(0);
+        ListNode cur = dummy;
+        int delta = 0;  // 进位
+        // 只要有一个链表不为空，就要继续遍历
+        while (l1 != null || l2 != null) {
+            int tmp = 0;
+            // while条件是或， 故此处还要判断空指针
+            if (l1 != null) {
+                tmp += l1.val;
+                l1 = l1.next;
+            }
+            
+            if (l2 != null) {
+                tmp += l2.val;
+                l2 = l2.next;
+            }
+            // 加上进位
+            tmp += delta;
+            // 当前位的个位数
+            int bit = tmp % 10; 
+            ListNode newNode = new ListNode(bit);
+            // 链接到结果上
+            cur.next = newNode;
+            cur = cur.next;
+            // 新的进位， 下一次遍历时参与计算
+            delta = tmp / 10;
+        }
+
+        // 最后产生的进位还要加入到链表
+        if (delta != 0) {
+            ListNode newNode = new ListNode(delta);
+            cur.next = newNode;
+        }
+
+        return dummy.next;
+    }
+
     public static void main(String[] args) {
         ListNode a = new ListNode(2);
         ListNode b = new ListNode(4);
