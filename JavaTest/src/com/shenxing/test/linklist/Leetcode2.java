@@ -61,33 +61,29 @@ public class Leetcode2 {
      * @return
      */
     public ListNode addTwoNumbers2(ListNode l1, ListNode l2) {
-        // 首先， 不判判两个链表，在while中有判断。 
+        // 优化点一， 不判判两个链表，在while中有判断。 
         ListNode dummy = new ListNode(0);
         ListNode cur = dummy;
         int delta = 0;  // 进位
         // 只要有一个链表不为空，就要继续遍历
         while (l1 != null || l2 != null) {
-            int tmp = 0;
-            // while条件是或， 故此处还要判断空指针
-            if (l1 != null) {
-                tmp += l1.val;
-                l1 = l1.next;
-            }
             
-            if (l2 != null) {
-                tmp += l2.val;
-                l2 = l2.next;
-            }
-            // 加上进位
-            tmp += delta;
+            // 优化点二，如果当前节点为空，可以将当前节点的值当作0。做其他链表题目时可以借鉴
+            int val1 = l1 != null ? l1.val : 0;
+            int val2 = l2 != null ? l2.val : 0;
+            
+            int tmp = val1 + val2 + delta;
+            // 新的进位， 下一次遍历时参与计算
+            delta = tmp / 10;
             // 当前位的个位数
             int bit = tmp % 10; 
             ListNode newNode = new ListNode(bit);
             // 链接到结果上
             cur.next = newNode;
             cur = cur.next;
-            // 新的进位， 下一次遍历时参与计算
-            delta = tmp / 10;
+            
+            l1 = (l1 != null ? l1.next : null);
+            l2 = (l2 != null ? l2.next : null);
         }
 
         // 最后产生的进位还要加入到链表
