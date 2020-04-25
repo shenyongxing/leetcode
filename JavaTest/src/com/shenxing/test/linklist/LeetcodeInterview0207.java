@@ -32,6 +32,8 @@ public class LeetcodeInterview0207 {
             // 当链表A走到尾部后， 从B链表开始从新遍历
             if (curA == null) {
                 curA = headB;
+            } else {
+                curA = curA.next;
             }
             // 同理链表B走到尾部后，从A链表开始遍历
 
@@ -40,9 +42,9 @@ public class LeetcodeInterview0207 {
             // 先遍历完其中一个链表，将最后一个节点与另一个链表链接起来，形成带环的链表，然后用之前的解法来解这道题。 
             if (curB == null) {
                 curB = headA;
+            } else {
+                curB = curB.next;
             }
-            curA = curA.next;
-            curB = curB.next;
         }
 
         return curA;
