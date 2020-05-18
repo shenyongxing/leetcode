@@ -39,7 +39,8 @@ public class AVLTree {
         if (root.val < value) {
             root.right = insert(root.right, value);
             if (height(root.right) - height(root.left) == 2) {
-                if (root.right.val > value) {
+                // 注意，是value大于root.right.val时只进行单旋转（可通过画草图来确认）
+                if (value > root.right.val) {
                     rotateWithRightChild(root);
                 } else {
                     // 双旋转
@@ -51,6 +52,7 @@ public class AVLTree {
             // 插入完成后检测高度
             if (height(root.left) - height(root.right) == 2) {
                 // 高度差等于2时需要旋转
+                // 是value小于root.left.val时只进行单旋转
                 if (value < root.left.val) {
                     rotateWithLeftChild(root);
                 } else {
